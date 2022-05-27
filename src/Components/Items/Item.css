@@ -1,0 +1,5 @@
+.items {
+  border: 1px solid black;
+  width: min(100% - 5rem, 300px);
+  margin: 2em;
+}
