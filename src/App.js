@@ -46,7 +46,6 @@ function App() {
   }
 
   function deleteProduct(id) {
-    console.log(id);
     let newProduct = products.filter((product) => {
       return product.id !== id;
     });

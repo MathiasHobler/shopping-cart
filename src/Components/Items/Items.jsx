@@ -2,7 +2,6 @@ import { React } from "react";
 import "./Item.css";
 
 const Items = ({ product, setNewAmount, rest, deleteProduct }) => {
-  console.log(product.amount);
   return (
     <section className="items">
       <h1>{product.product}</h1>
