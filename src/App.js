@@ -1,33 +1,30 @@
 import "./App.css";
 import { Items, TotalPrice, AddNewItem } from "./Components/components";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { nanoid } from "nanoid";
 
 function App() {
-  const [products, setProducts] = useState([
-    {
-      id: nanoid(),
-      product: "Bananas",
-      price: 0.5,
-      amount: 0,
-    },
-    {
-      id: nanoid(),
-      product: "Apples",
-      price: 0.6,
-      amount: 0,
-    },
-    {
-      id: nanoid(),
-      product: "Avocados",
-      price: 1.9,
-      amount: 0,
-    },
-  ]);
+  const [products, setProducts] = useState(() => {
+    const localStoredItems = localStorage.getItem("products");
+    if (localStoredItems) {
+      return JSON.parse(localStoredItems);
+    } else {
+      return [];
+    }
+  });
 
-  const newProductsAmount = (index, newAmount) => {
-    const newProduct = [...products];
-    newProduct[index] = { ...newProduct[index], amount: newAmount };
+  useEffect(() => {
+    localStorage.setItem("products", JSON.stringify(products));
+  }, [products]);
+
+  const newProductsAmount = (id, newAmount) => {
+    const newProduct = products.map((product) => {
+      if (product.id === id) {
+        return { ...product, amount: newAmount };
+      } else {
+        return product;
+      }
+    });
     setProducts(newProduct);
   };
 
@@ -74,14 +71,16 @@ function App() {
         <TotalPrice sum={newRest} />
       </header>
       <AddNewItem addNewProduct={addNewProduct} />
-      {products.map((product, index) => {
+      {products.map((product) => {
         return (
           <Items
             key={product.id}
             product={product}
             rest={newRest}
             deleteProduct={deleteProduct}
-            setNewAmount={(newAmount) => newProductsAmount(index, newAmount)}
+            setNewAmount={(newAmount) =>
+              newProductsAmount(product.id, newAmount)
+            }
           />
         );
       })}
