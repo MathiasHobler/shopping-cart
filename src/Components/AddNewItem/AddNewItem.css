@@ -1,0 +1,15 @@
+.addNewItem {
+  border: 1px solid black;
+  width: min(100% - 5rem, 300px);
+  margin: 2em;
+  gap: 0.5em;
+
+  display: flex;
+  flex-direction: column;
+  padding-bottom: 0.5em;
+}
+
+.addNewItem__label {
+  width: min(100% - 5rem, 250px);
+  margin: auto;
+}

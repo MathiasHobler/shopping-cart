@@ -1,5 +1,5 @@
 import "./App.css";
-import { Items, TotalPrice } from "./Components/components";
+import { Items, TotalPrice, AddNewItem } from "./Components/components";
 import { useState } from "react";
 import { nanoid } from "nanoid";
 
@@ -53,6 +53,19 @@ function App() {
     setProducts(newProduct);
   }
 
+  function addNewProduct(newProduct) {
+    const newItem = [
+      ...products,
+      {
+        id: nanoid(),
+        product: newProduct[0],
+        price: newProduct[1],
+        amount: 0,
+      },
+    ];
+    setProducts(newItem);
+  }
+
   return (
     <div className="App">
       <header>
@@ -60,6 +73,7 @@ function App() {
         <TotalPrice sum={setTotalPrice} />
         <TotalPrice sum={newRest} />
       </header>
+      <AddNewItem addNewProduct={addNewProduct} />
       {products.map((product, index) => {
         return (
           <Items
